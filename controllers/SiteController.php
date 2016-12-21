@@ -2,7 +2,7 @@
 
 namespace app\controllers;
 
-use Yii;
+use app\models\Entity\Task1\Category;
 use yii\web\Controller;
 
 class SiteController extends Controller
@@ -10,18 +10,15 @@ class SiteController extends Controller
     public function actions()
     {
         return [
-            'error'   => [
+            'error' => [
                 'class' => 'yii\web\ErrorAction',
-            ],
-            'captcha' => [
-                'class'           => 'yii\captcha\CaptchaAction',
-                'fixedVerifyCode' => YII_ENV_TEST ? 'testme' : null,
             ],
         ];
     }
     public function actionIndex()
     {
+        $categories = Category::find()->orderBy('created_at')->all();
 
-        return $this->render('index');
+        return $this->render('index', ['categories' => $categories]);
     }
 }
